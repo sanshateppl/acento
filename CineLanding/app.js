@@ -16,7 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let d = new Date(today);
         d.setDate(today.getDate() + i);
 
-        const dateString = d.toISOString().split('T')[0];
+        // Usar formato local para evitar desfasajes de zona horaria con toISOString
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const dayNumFormatted = String(d.getDate()).padStart(2, '0');
+        const dateString = `${year}-${month}-${dayNumFormatted}`;
+
         const dayName = diasSemana[d.getDay()];
         const dayNum = d.getDate();
         const monthName = meses[d.getMonth()];
@@ -50,7 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
         movieListContainer.innerHTML = '<p style="color: var(--text-secondary); padding: 20px 0;">Cargando cartelera...</p>';
         
         try {
-            const response = await fetch(SHEET_CSV_URL);
+            // Se agrega un parámetro de tiempo para evitar la caché del navegador
+            const cacheBuster = new Date().getTime();
+            const response = await fetch(`${SHEET_CSV_URL}&t=${cacheBuster}`);
             if (!response.ok) throw new Error("HTTP error " + response.status);
             const csvText = await response.text();
             
@@ -75,12 +82,25 @@ document.addEventListener("DOMContentLoaded", () => {
                             price: row.price ? row.price.trim() : 0,
                             hasDiscount: String(row.hasDiscount).toLowerCase() === 'true' || String(row.hasDiscount).toLowerCase() === 'sí' || String(row.hasDiscount).toLowerCase() === 'si' || String(row.hasDiscount).toLowerCase() === '1',
                             discountPrice: row.discountPrice ? row.discountPrice.trim() : 0,
-                            poster: (row.poster || "").trim()
+                            poster: (row.poster || "").trim(),
+                            mapsLink: (row.mapsLink || "").trim()
                         };
                     });
                     
                     // Iniciar con la cartelera del día seleccionado en el dropdown
-                    updateDisplay(dateDropdown.value);
+                    let selectedDate = dateDropdown.value;
+                    
+                    // Si hoy no hay películas, buscar el primer día con funciones
+                    const hasMoviesToday = moviesData.some(m => m.date === selectedDate);
+                    if (!hasMoviesToday && moviesData.length > 0) {
+                        const firstDateWithMovies = dates.find(d => moviesData.some(m => m.date === d.dateString));
+                        if (firstDateWithMovies) {
+                            selectedDate = firstDateWithMovies.dateString;
+                            dateDropdown.value = selectedDate; // Actualizar el select
+                        }
+                    }
+
+                    updateDisplay(selectedDate);
                 }
             });
         } catch (err) {
@@ -128,8 +148,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="movie-content">
                     <div class="movie-meta-right">
                         <div class="cinema-name">${movie.cinema}</div>
-                        <div class="cinema-location">${movie.location}</div>
-                        <div class="show-time">${movie.time}</div>
+                        ${movie.mapsLink 
+                            ? `<a href="${movie.mapsLink}" target="_blank" class="cinema-location maps-link"><span class="loc-text">${movie.location}</span><span class="loc-hover">¿Cómo llegar?</span></a>`
+                            : `<div class="cinema-location">${movie.location}</div>`
+                        }
+                        <div class="show-time ${movie.time.includes(';') || movie.time.length > 5 ? 'multiple' : ''}">${movie.time}</div>
                     </div>
                     
                     <h2 class="movie-title">${movie.title}</h2>

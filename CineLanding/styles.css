@@ -77,13 +77,12 @@ body::after {
     color: var(--text-primary);
     font-size: 0.8rem;
     letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 500;
     text-align: right;
     margin-bottom: 5px;
     /* Ajuste para alinear visualmente la base con la tipografía principal */
     line-height: 1.4;
-
+    text-transform: UPPERCASE
 }
 
 .main-title {
@@ -267,12 +266,38 @@ body::after {
     margin-bottom: 5px;
 }
 
+a.cinema-location.maps-link {
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+}
+
+a.cinema-location.maps-link .loc-hover {
+    display: none;
+    color: var(--text-primary);
+    font-weight: bold;
+}
+
+a.cinema-location.maps-link:hover .loc-text {
+    display: none;
+}
+
+a.cinema-location.maps-link:hover .loc-hover {
+    display: inline;
+}
+
 .show-time {
     font-family: var(--font-serif);
     font-size: 2.2rem;
     color: var(--text-secondary);
     font-style: italic;
     line-height: 1;
+}
+
+.show-time.multiple {
+    font-size: 1.4rem;
+    line-height: 1.2;
+    margin-top: 5px;
 }
 
 .movie-title {
