@@ -50,7 +50,7 @@ body::after {
         url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-repeat: no-repeat, repeat;
     background-size: 100% 100%, 256px 256px;
-    opacity: 0.10;
+    opacity: 0.05;
     mix-blend-mode: overlay;
     /* Permite que el ruido se mezcle con el fondo oscuro y el viñeteado lo oscurezca aún más */
 }
