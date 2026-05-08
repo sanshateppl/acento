@@ -236,13 +236,17 @@ body::after {
 
 .movie-card {
     display: flex;
-    border: 1px solid var(--border-color);
-    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 24px;
     gap: 20px;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: transform 0.2s, border-color 0.2s;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     overflow: hidden;
 }
@@ -258,9 +262,11 @@ body::after {
 }
 
 .movie-card:hover {
-    border-color: var(--accent-);
-    /* Acento rojo suave al hover */
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 12px 40px 0 rgba(0, 0, 0, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.25);
+    transform: translateY(-4px);
 }
 
 .movie-poster-wrap {
@@ -274,23 +280,17 @@ body::after {
     width: 100%;
     height: auto;
     display: block;
-    border: 1px solid #111;
-    filter: grayscale(20%) contrast(1.1);
-    /* Toque vintage a las imágenes */
-    border-radius: 15px;
-    /* Leve redondeo */
+    border: 1px solid rgba(255,255,255,0.1);
+    filter: grayscale(10%) contrast(1.1);
+    border-radius: 12px;
     position: relative;
     z-index: 1;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+    transition: filter 0.4s ease, transform 0.4s ease;
 }
 
 .movie-poster:hover {
-    transform: scale(1.1);
-    /* Mínimo zoom 10% */
-    box-shadow: -15px 15px 0px var(--accent-);
-    /* Fondo sólido desfasado (sombra dura) */
-    z-index: 10;
-    /* Asegurar que flote sobre otros elementos al hacer zoom */
+    filter: blur(6px) grayscale(40%) contrast(1.1);
+    transform: scale(0.98);
 }
 
 .movie-content {
