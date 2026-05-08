@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acento</title>
+    <!-- Fuentes Google: Playfair Display (Serif) y Archivo (Sans-serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Encabezado Principal -->
+        <header class="main-header">
+            <div class="title-container">
+                <h1 class="main-title">Acento</h1>
+                <div class="pre-title">
+                    <span>CÓRDOBA, ARGENTINA</span><br>
+                    <span>CARTELERÍA SEMANAL</span>
+                </div>
+            </div>
+            <div class="edition-bar">
+                <span>4 MAY - 10 MAY</span>
+            </div>
+        </header>
+
+        <!-- Selector de Fechas -->
+        <div class="date-dropdown-container">
+            <label for="date-dropdown" class="date-label">Seleccionar día:</label>
+            <select id="date-dropdown" class="date-dropdown">
+                <!-- Las opciones se inyectarán con JS -->
+            </select>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Encabezado de Lista -->
+        <!-- Encabezado de Lista -->
+        <div class="list-header">
+            <div class="current-date" id="display-date">MARTES 5 DE MAYO <span class="badge" id="today-badge">HOY</span>
+            </div>
+            <div class="total-functions"><span id="functions-count">0</span> FUNCIONES</div>
+        </div>
+
+        <!-- Contenedor de Películas -->
+        <main class="movie-list" id="movie-list">
+            <!-- Las películas se inyectarán aquí con JS -->
+        </main>
+
+        <div class="national-cinema-wrapper">
+            <a href="https://www.inforealdecine.com/" class="action-btn">Un poco de cine nacional</a>
+        </div>
+
+        <footer class="main-footer">
+            <p>Aguante el cine.</p>
+        </footer>
+    </div>
+    <!-- PapaParse para procesar Google Sheets CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
