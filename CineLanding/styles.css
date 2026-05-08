@@ -33,7 +33,35 @@ body {
     /* Crea un contexto de apilamiento para el pseudo-elemento */
 }
 
-/* Efecto de granulado analógico (old film) con más cuerpo */
+/* LIGHT LEAKS Y SCRATCHES (Capa 1) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 2;
+    /* Light leaks y rayas verticales (ahora mucho más tenues y desde abajo) */
+    background: 
+        /* Light Leak Principal (Desde la esquina inferior izquierda, muy leve) */
+        radial-gradient(circle at -5% 105%, rgba(255, 120, 30, 0.05) 0%, rgba(255, 60, 0, 0.015) 30%, transparent 55%),
+        /* Un toque minúsculo de amarillo más al centro-abajo */
+        radial-gradient(ellipse at 15% 95%, rgba(255, 180, 50, 0.02) 0%, transparent 40%),
+        /* Rayas de película (Scratches) */
+        linear-gradient(to right, 
+            transparent 15%, rgba(255,255,255,0.04) 15%, transparent 15.1%,
+            transparent 18%, rgba(255,255,255,0.01) 18%, transparent 18.2%,
+            transparent 45%, rgba(255,255,255,0.03) 45%, transparent 45.1%,
+            transparent 75%, rgba(255,255,255,0.02) 75%, transparent 75.1%,
+            transparent 90%, rgba(255,255,255,0.03) 90%, transparent 90.1%
+        );
+    mix-blend-mode: screen;
+    animation: film-scratch 1.8s steps(1) infinite;
+}
+
+/* Efecto de granulado analógico (old film) con más cuerpo (Capa 2) */
 body::after {
     content: "";
     position: fixed;
@@ -43,16 +71,28 @@ body::after {
     bottom: 0;
     pointer-events: none;
     z-index: 3;
-    /* Lo enviamos detrás de todo el contenido de la página */
     /* Viñeteado oscuro en los bordes + Textura de ruido de alto contraste tileada */
     background-image:
-        radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.7) 150%),
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.8) 150%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-repeat: no-repeat, repeat;
     background-size: 100% 100%, 256px 256px;
-    opacity: 0.05;
+    opacity: 0.07; 
     mix-blend-mode: overlay;
-    /* Permite que el ruido se mezcle con el fondo oscuro y el viñeteado lo oscurezca aún más */
+    animation: film-grain 2.5s steps(2) infinite;
+}
+
+@keyframes film-scratch {
+    0% { background-position: 0 0; opacity: 0.95; }
+    25% { background-position: -1px 0; opacity: 1; }
+    50% { background-position: 1px 0; opacity: 0.98; }
+    75% { background-position: -2px 0; opacity: 0.97; }
+    100% { background-position: 0 0; opacity: 0.95; }
+}
+
+@keyframes film-grain {
+    0%, 100% { background-position: 0 0, 0 0; }
+    50% { background-position: 0 0, 50px 50px; }
 }
 
 .container {
@@ -289,7 +329,7 @@ a.cinema-location.maps-link:hover .loc-hover {
 .show-time {
     font-family: var(--font-serif);
     font-size: 2.2rem;
-    color: var( --text-secondary);
+    color: var(--text-secondary);
     font-style: italic;
     line-height: 1;
 }
