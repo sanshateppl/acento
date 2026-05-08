@@ -423,6 +423,109 @@ a.cinema-location.maps-link:hover .loc-hover {
     color: var(--text-secondary);
 }
 
+/* NUEVAS FUNCIONES */
+/* Filtros de Cine */
+.cinema-filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.filter-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-family: var(--font-archivo);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--accent-);
+    color: var(--accent-);
+}
+
+.filter-btn.active {
+    background-color: var(--accent-);
+    border-color: var(--accent-);
+    color: #000;
+    font-weight: bold;
+}
+
+/* Badges (Etiquetas) */
+.movie-badges-container {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 20;
+}
+
+.movie-badge {
+    background-color: var(--accent-);
+    color: #000;
+    font-family: var(--font-archivo);
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    letter-spacing: 0.5px;
+}
+
+/* WA Share Btn */
+.movie-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.wa-share-btn {
+    color: #25D366;
+    background: rgba(37, 211, 102, 0.1);
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.wa-share-btn:hover {
+    background: #25D366;
+    color: #000;
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+}
+
+/* Animación Fade In Cascade */
+.fade-in-card {
+    opacity: 0;
+    animation: slideUpFadeIn 0.5s ease forwards;
+    animation-delay: calc(var(--anim-order) * 0.1s);
+}
+
+@keyframes slideUpFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Responsivo */
 @media (max-width: 650px) {
     .main-title {
