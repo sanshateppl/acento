@@ -239,8 +239,22 @@ body::after {
     border: 1px solid var(--border-color);
     padding: 20px;
     gap: 20px;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: transform 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.movie-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 .movie-card:hover {
@@ -252,6 +266,8 @@ body::after {
 .movie-poster-wrap {
     flex-shrink: 0;
     width: 140px;
+    position: relative;
+    z-index: 1;
 }
 
 .movie-poster {
@@ -282,6 +298,7 @@ body::after {
     display: flex;
     flex-direction: column;
     position: relative;
+    z-index: 1;
 }
 
 .movie-meta-right {
@@ -470,7 +487,7 @@ a.cinema-location.maps-link:hover .loc-hover {
 
 .movie-badge {
     background-color: var(--accent-);
-    color: #000;
+    color: var(--text-secondary);
     font-family: var(--font-archivo);
     font-size: 0.7rem;
     font-weight: 900;
