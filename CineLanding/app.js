@@ -8,45 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const diasSemana = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
     const meses = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
 
-    // Generar las fechas para el dropdown (próximos 7 días empezando desde hoy)
     let dates = [];
-    const today = new Date();
-
-    for (let i = 0; i < 7; i++) {
-        let d = new Date(today);
-        d.setDate(today.getDate() + i);
-
-        // Usar formato local para evitar desfasajes de zona horaria con toISOString
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const dayNumFormatted = String(d.getDate()).padStart(2, '0');
-        const dateString = `${year}-${month}-${dayNumFormatted}`;
-
-        const dayName = diasSemana[d.getDay()];
-        const dayNum = d.getDate();
-        const monthName = meses[d.getMonth()];
-
-        let label = `${dayName} ${dayNum} DE ${monthName}`;
-        if (i === 0) label += " (HOY)";
-
-        dates.push({
-            dateString,
-            label,
-            isToday: i === 0,
-            dayName,
-            dayNum,
-            monthName
-        });
-    }
-
-    // Llenar el select
-    dates.forEach(d => {
-        const option = document.createElement('option');
-        option.value = d.dateString;
-        option.textContent = d.label;
-        dateDropdown.appendChild(option);
-    });
-
     let moviesData = [];
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT__45zoxldvTAxWK6JQWV6FeCQ7F5PO5z4gxfbL0PbQef1Es7cPKWG5rEFEw534Gi9ZZLx1CBN_Xe1/pub?gid=259971422&single=true&output=csv";
 
@@ -65,8 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 header: true,
                 transformHeader: function(h) { return h.trim(); },
                 complete: function(results) {
-                    // Filtrar filas vacías y mapear los resultados
-                    moviesData = results.data.filter(row => row.title && row.fecha).map((row, index) => {
+                    // Obtener todas las filas que al menos tengan una fecha definida
+                    const rawDataWithDates = results.data.filter(row => row.fecha);
+
+                    // Mapear solo las que tengan título para la cartelera real
+                    moviesData = rawDataWithDates.filter(row => row.title).map((row, index) => {
                         return {
                             id: index + 1,
                             date: row.fecha.trim(),
@@ -88,18 +53,53 @@ document.addEventListener("DOMContentLoaded", () => {
                         };
                     });
                     
-                    // Iniciar con la cartelera del día seleccionado en el dropdown
-                    let selectedDate = dateDropdown.value;
+                    // Extraer fechas únicas usando rawDataWithDates para incluir días declarados pero vacíos
+                    const uniqueDates = Array.from(new Set(rawDataWithDates.map(m => m.fecha.trim()))).sort();
                     
-                    // Si hoy no hay películas, buscar el primer día con funciones
-                    const hasMoviesToday = moviesData.some(m => m.date === selectedDate);
-                    if (!hasMoviesToday && moviesData.length > 0) {
-                        const firstDateWithMovies = dates.find(d => moviesData.some(m => m.date === d.dateString));
-                        if (firstDateWithMovies) {
-                            selectedDate = firstDateWithMovies.dateString;
-                            dateDropdown.value = selectedDate; // Actualizar el select
-                        }
+                    const today = new Date();
+                    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                    
+                    dateDropdown.innerHTML = '';
+                    dates = [];
+                    
+                    uniqueDates.forEach(dateStr => {
+                        // Parsear dateStr "YYYY-MM-DD" a local date sin problemas de zona horaria
+                        const [y, m, d] = dateStr.split('-');
+                        const dateObj = new Date(y, m - 1, d);
+                        
+                        const dayName = diasSemana[dateObj.getDay()];
+                        const dayNum = dateObj.getDate();
+                        const monthName = meses[dateObj.getMonth()];
+                        const isToday = dateStr === todayStr;
+                        
+                        let label = `${dayName} ${dayNum} DE ${monthName}`;
+                        if (isToday) label += " (HOY)";
+                        
+                        dates.push({
+                            dateString: dateStr,
+                            label,
+                            isToday,
+                            dayName,
+                            dayNum,
+                            monthName
+                        });
+                        
+                        const option = document.createElement('option');
+                        option.value = dateStr;
+                        option.textContent = label;
+                        dateDropdown.appendChild(option);
+                    });
+                    
+                    if (dates.length === 0) {
+                        movieListContainer.innerHTML = '<p style="color: var(--text-secondary); padding: 20px 0;">No hay funciones programadas para esta semana.</p>';
+                        functionsCount.textContent = "0";
+                        displayDate.innerHTML = "-";
+                        return;
                     }
+
+                    // Iniciar con "hoy" si hay pelis hoy, o con la primera fecha disponible de la lista
+                    let selectedDate = dates.find(d => d.isToday) ? todayStr : dates[0].dateString;
+                    dateDropdown.value = selectedDate;
 
                     updateDisplay(selectedDate);
                 }
