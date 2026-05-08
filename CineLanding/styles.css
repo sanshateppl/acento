@@ -289,7 +289,7 @@ a.cinema-location.maps-link:hover .loc-hover {
 .show-time {
     font-family: var(--font-serif);
     font-size: 2.2rem;
-    color: var(--text-secondary);
+    color: var( --accent-);
     font-style: italic;
     line-height: 1;
 }
