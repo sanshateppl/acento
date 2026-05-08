@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             Papa.parse(csvText, {
                 header: true,
+                transformHeader: function(h) { return h.trim(); },
                 complete: function(results) {
                     // Filtrar filas vacías y mapear los resultados
                     moviesData = results.data.filter(row => row.title && row.fecha).map((row, index) => {
@@ -152,7 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             ? `<a href="${movie.mapsLink}" target="_blank" class="cinema-location maps-link"><span class="loc-text">${movie.location}</span><span class="loc-hover">¿Cómo llegar?</span></a>`
                             : `<div class="cinema-location">${movie.location}</div>`
                         }
-                        <div class="show-time ${movie.time.includes(';') || movie.time.length > 5 ? 'multiple' : ''}">${movie.time}</div>
+                        <div class="show-time ${movie.time.includes(';') || movie.time.includes('\n') || movie.time.length > 5 ? 'multiple' : ''}">${movie.time.replace(/\n/g, '<br>')}</div>
                     </div>
                     
                     <h2 class="movie-title">${movie.title}</h2>
