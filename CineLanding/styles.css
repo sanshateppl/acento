@@ -362,6 +362,18 @@ a.cinema-location.maps-link:hover .loc-hover {
     box-shadow: 0 4px 10px rgba(213, 0, 6, 0.1);
 }
 
+.action-btn .btn-hover {
+    display: none;
+}
+
+.action-btn:hover .btn-text {
+    display: none;
+}
+
+.action-btn:hover .btn-hover {
+    display: inline;
+}
+
 .main-footer {
     text-align: center;
     margin-top: 60px;
