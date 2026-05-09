@@ -52,7 +52,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             discountPrice: row.discountPrice ? row.discountPrice.trim() : 0,
                             poster: (row.poster || "").trim(),
                             mapsLink: (row.mapsLink || "").trim(),
-                            tags: (row.tags || "").trim()
+                            tags: (row.tags || "").trim(),
+                            links: (row.links || "").trim()
                         };
                     });
                     
@@ -162,10 +163,21 @@ document.addEventListener("DOMContentLoaded", () => {
             const waText = encodeURIComponent(`¿Vamos a ver "${movie.title}"? La pasan el ${displayDateText} a las ${movie.time.replace(/\n/g, ' y ')} en ${movie.cinema}`);
             const waLink = `https://wa.me/?text=${waText}`;
 
+            let posterContent = `<img src="${movie.poster}" alt="Póster de ${movie.title}" class="movie-poster">`;
+            
+            if (movie.links) {
+                posterContent = `
+                    <a href="${movie.links}" target="_blank" class="poster-link">
+                        ${posterContent}
+                        <span class="poster-info-text">+ INFO</span>
+                    </a>
+                `;
+            }
+
             movieCard.innerHTML = `
                 <div class="movie-poster-wrap">
                     ${tagsHtml}
-                    <img src="${movie.poster}" alt="Póster de ${movie.title}" class="movie-poster">
+                    ${posterContent}
                 </div>
                 <div class="movie-content">
                     <div class="movie-meta-right">

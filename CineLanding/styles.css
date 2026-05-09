@@ -270,7 +270,7 @@ body::after {
     /* Leve redondeo */
     position: relative;
     z-index: 1;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s, filter 0.4s ease;
 }
 
 .movie-poster:hover {
@@ -280,6 +280,41 @@ body::after {
     /* Fondo sólido desfasado (sombra dura) */
     z-index: 10;
     /* Asegurar que flote sobre otros elementos al hacer zoom */
+}
+
+/* Enlace del póster e info interactiva */
+.poster-link {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    border-radius: 12px;
+}
+
+.poster-link:hover .movie-poster {
+    filter: grayscale(100%) blur(4px) contrast(1.1);
+}
+
+.poster-info-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-secondary);
+    font-family: var(--font-archivo);
+    font-weight: bold;
+    font-size: 1.4rem;
+    opacity: 0;
+    z-index: 11;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    text-align: center;
+    text-shadow: 0 4px 15px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,0.8);
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.poster-link:hover .poster-info-text {
+    opacity: 1;
 }
 
 .movie-content {
