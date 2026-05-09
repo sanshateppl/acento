@@ -554,6 +554,7 @@ a.cinema-location.maps-link:hover .loc-hover {
     border-radius: 4px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 /* WA Share Btn */
