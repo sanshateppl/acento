@@ -122,18 +122,13 @@ body::after {
 
 /* LAYOUT PRINCIPAL */
 .main-layout {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
+    position: relative;
+    width: 100%;
 }
 
 .container {
-    flex-grow: 1;
-    max-width: 800px;
-    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 /* HEADER */
@@ -653,8 +648,8 @@ a.cinema-location.maps-link:hover .loc-hover {
 /* SIDEBAR DE PRECIOS */
 .prices-sidebar {
     width: 250px;
-    flex-shrink: 0;
-    position: sticky;
+    position: absolute;
+    left: 20px;
     top: 40px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
@@ -663,6 +658,7 @@ a.cinema-location.maps-link:hover .loc-hover {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     margin-top: 15px;
+    z-index: 10;
 }
 
 .prices-title {
@@ -711,26 +707,29 @@ a.cinema-location.maps-link:hover .loc-hover {
     display: block;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1300px) {
+    /* Si la pantalla no es lo suficientemente ancha, ocultamos el sidebar lateral y lo mostramos abajo de todo */
+    .prices-sidebar {
+        position: relative;
+        left: 0;
+        top: 0;
+        margin: 40px auto 30px auto;
+        width: 100%;
+        max-width: 800px;
+    }
+    
     .main-layout {
+        display: flex;
         flex-direction: column;
         align-items: center;
         padding: 0 10px;
     }
     
-    .prices-sidebar {
-        width: 100%;
-        max-width: 800px;
-        position: relative;
-        top: 0;
-        margin-top: 40px;
-        margin-bottom: 30px;
-        order: 2;
-    }
-    
     .container {
-        width: 100%;
         order: 1;
     }
+    
+    .prices-sidebar {
+        order: 2;
     }
 }
