@@ -137,18 +137,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (p === 0 || p === '0' || String(p).toLowerCase() === 'gratis' || String(p).toLowerCase() === 'gratuita') {
                     return 'Libre y gratuita';
                 }
+                if (isNaN(p)) {
+                    return p;
+                }
                 return `$${p}`;
             };
 
-            if (movie.priceNote) {
-                // Texto personalizado
-                priceDisplay = `<span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${movie.priceNote}</span>`;
-            } else if (movie.hasDiscount && movie.discountPrice !== undefined) {
+            if (movie.hasDiscount && movie.discountPrice !== undefined) {
                 // Precio diferenciado activado
                 priceDisplay = `General <span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.price)}</span> &nbsp;|&nbsp; Estudiantes y Jubilados <span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.discountPrice)}</span>`;
             } else {
                 // Precio único
                 priceDisplay = `<span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.price)}</span>`;
+            }
+
+            if (movie.priceNote) {
+                // Agregar la nota al final con color secundario
+                priceDisplay += ` <span style="color: var(--text-secondary); font-weight: normal;">| ${movie.priceNote}</span>`;
             }
 
             // Tags HTML
