@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let dates = [];
     let moviesData = [];
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT__45zoxldvTAxWK6JQWV6FeCQ7F5PO5z4gxfbL0PbQef1Es7cPKWG5rEFEw534Gi9ZZLx1CBN_Xe1/pub?gid=259971422&single=true&output=csv";
-
+    const PRICES_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT__45zoxldvTAxWK6JQWV6FeCQ7F5PO5z4gxfbL0PbQef1Es7cPKWG5rEFEw534Gi9ZZLx1CBN_Xe1/pub?gid=520128671&single=true&output=csv";
+    const pricesContentContainer = document.getElementById('prices-content');
     // Cargar datos de Google Sheets
     async function loadData() {
         movieListContainer.innerHTML = '<p style="color: var(--text-secondary); padding: 20px 0;">Cargando cartelera...</p>';
@@ -288,7 +289,70 @@ document.addEventListener("DOMContentLoaded", () => {
         updateDisplay(e.target.value);
     });
 
+    // Cargar datos de precios
+    async function loadPrices() {
+        if (!pricesContentContainer) return;
+        pricesContentContainer.innerHTML = '<p style="color: var(--text-secondary);">Cargando precios...</p>';
+        try {
+            const cacheBuster = new Date().getTime();
+            const response = await fetch(`${PRICES_CSV_URL}&t=${cacheBuster}`);
+            if (!response.ok) throw new Error("HTTP error " + response.status);
+            const csvText = await response.text();
+            
+            Papa.parse(csvText, {
+                header: true,
+                transformHeader: function(h) { return h.trim(); },
+                complete: function(results) {
+                    renderPrices(results.data);
+                }
+            });
+        } catch (error) {
+            console.error("Error cargando precios:", error);
+            pricesContentContainer.innerHTML = '<p style="color: var(--accent-);">Error al cargar precios.</p>';
+        }
+    }
+
+    function renderPrices(data) {
+        if (!pricesContentContainer) return;
+        pricesContentContainer.innerHTML = '';
+        
+        let html = '';
+        data.forEach(row => {
+            const cine = (row.Cine || "").trim();
+            const promo = (row.Promocion || "").trim();
+            const precio = (row.Precio || "").trim();
+            const precioPromo = (row.PrecioPromo || "").trim();
+            
+            if (!cine && !promo && !precio && !precioPromo) return;
+            
+            html += `<div class="price-item">`;
+            if (cine) html += `<div class="price-cinema-name">${cine}</div>`;
+            if (promo) html += `<div class="price-promo-day">${promo}</div>`;
+            
+            if (precio || precioPromo) {
+                html += `<div class="price-value-container">`;
+                if (precio) {
+                    const formatP = isNaN(precio) ? precio : `$${precio}`;
+                    html += `<span class="price-value">General ${formatP}</span>`;
+                }
+                if (precioPromo) {
+                    const formatPromo = isNaN(precioPromo) ? precioPromo : `$${precioPromo}`;
+                    html += `<span class="price-promo-value">Promo ${formatPromo}</span>`;
+                }
+                html += `</div>`;
+            }
+            html += `</div>`;
+        });
+        
+        if (!html) {
+            html = '<p style="color: var(--text-secondary);">No hay precios cargados.</p>';
+        }
+        
+        pricesContentContainer.innerHTML = html;
+    }
+
     // Cargar datos al iniciar
     loadData();
+    loadPrices();
 
 });

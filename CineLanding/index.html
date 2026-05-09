@@ -15,7 +15,16 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="main-layout">
+        <!-- Sidebar de Precios -->
+        <aside id="prices-sidebar" class="prices-sidebar">
+            <h2 class="prices-title">Precios vigentes</h2>
+            <div id="prices-content">
+                <!-- Se inyectará con JS -->
+            </div>
+        </aside>
+
+        <div class="container">
         <!-- Encabezado Principal -->
         <header class="main-header">
             <div class="title-container">
@@ -68,6 +77,7 @@
         <footer class="main-footer">
             <p>Aguante el cine.</p>
         </footer>
+    </div>
     </div>
     <!-- PapaParse para procesar Google Sheets CSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
