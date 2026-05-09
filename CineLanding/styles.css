@@ -547,10 +547,10 @@ a.cinema-location.maps-link:hover .loc-hover {
     background-color: var(--accent-);
     color: var(--text-secondary);
     font-family: var(--font-archivo);
-    font-size: 0.7rem;
-    font-weight: 900;
+    font-size: 0.6rem;
+    font-weight: normal;
     text-transform: uppercase;
-    padding: 4px 8px;
+    padding: 3px 6px;
     border-radius: 4px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     letter-spacing: 0.5px;
