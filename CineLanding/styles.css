@@ -528,7 +528,7 @@ a.cinema-location.maps-link:hover .loc-hover {
 .filter-btn.active {
     background-color: var(--accent-);
     border-color: var(--accent-);
-    color: #000;
+    color: #feffdd;
     font-weight: bold;
 }
 
