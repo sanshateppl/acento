@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             poster: (row.poster || "").trim(),
                             mapsLink: (row.mapsLink || "").trim(),
                             tags: (row.tags || "").trim(),
-                            links: (row.links || "").trim()
+                            links: (row.links || "").trim(),
+                            priceNote: (row.priceNote || "").trim()
                         };
                     });
                     
@@ -139,7 +140,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 return `$${p}`;
             };
 
-            if (movie.hasDiscount && movie.discountPrice !== undefined) {
+            if (movie.priceNote) {
+                // Texto personalizado
+                priceDisplay = `<span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${movie.priceNote}</span>`;
+            } else if (movie.hasDiscount && movie.discountPrice !== undefined) {
                 // Precio diferenciado activado
                 priceDisplay = `General <span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.price)}</span> &nbsp;|&nbsp; Estudiantes y Jubilados <span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.discountPrice)}</span>`;
             } else {
