@@ -647,6 +647,7 @@ a.cinema-location.maps-link:hover .loc-hover {
 
 /* SIDEBAR DE PRECIOS */
 .prices-sidebar {
+    display: none !important; /* Oculto temporalmente por pedido del usuario */
     width: 250px;
     position: absolute;
     left: 20px;
