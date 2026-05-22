@@ -670,16 +670,20 @@ a.cinema-location.maps-link:hover .loc-hover {
 }
 
 .footer-ig-link {
-    color: var(--text-secondary);
-    opacity: 0.7;
-    transition: opacity 0.3s ease, color 0.3s ease;
-    display: flex;
+    color: #ff5100;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    display: inline-flex;
     align-items: center;
+    vertical-align: middle;
 }
 
 .footer-ig-link:hover {
-    opacity: 1;
-    color: var(--accent-);
+    opacity: 0.7;
+}
+
+.footer-ig-link:visited {
+    color: #ff5100;
 }
 
 /* SIDEBAR DE PRECIOS */
