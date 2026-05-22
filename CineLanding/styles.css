@@ -645,6 +645,43 @@ a.cinema-location.maps-link:hover .loc-hover {
     }
 }
 
+/* FOOTER */
+.main-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 30px 0 10px 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 40px;
+}
+
+.main-footer p {
+    font-family: var(--font-archivo);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+}
+
+.main-footer strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.footer-ig-link {
+    color: var(--text-secondary);
+    opacity: 0.7;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.footer-ig-link:hover {
+    opacity: 1;
+    color: var(--accent-);
+}
+
 /* SIDEBAR DE PRECIOS */
 .prices-sidebar {
     display: none !important; /* Oculto temporalmente por pedido del usuario */
