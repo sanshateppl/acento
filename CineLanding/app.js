@@ -49,7 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             location: (row.location || "").trim(),
                             time: (row.time || "").trim(),
                             price: row.price ? row.price.trim() : 0,
-                            hasDiscount: String(row.hasDiscount).toLowerCase() === 'true' || String(row.hasDiscount).toLowerCase() === 'sí' || String(row.hasDiscount).toLowerCase() === 'si' || String(row.hasDiscount).toLowerCase() === '1',
+                            hasDiscount: (function() {
+                                const val = (row.hasDiscount || "").trim();
+                                const lower = val.toLowerCase();
+                                if (!val || lower === 'false' || lower === 'no' || lower === '0') return false;
+                                if (lower === 'true' || lower === 'sí' || lower === 'si' || lower === '1') return 'Estudiantes y Jubilados';
+                                return val; // Texto personalizado (ej: "Jubilados", "Estudiantes UNC")
+                            })(),
                             discountPrice: row.discountPrice ? row.discountPrice.trim() : 0,
                             poster: (row.poster || "").trim(),
                             mapsLink: (row.mapsLink || "").trim(),
@@ -145,8 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             if (movie.hasDiscount && movie.discountPrice !== undefined) {
-                // Precio diferenciado activado
-                priceDisplay = `General <span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.price)}</span> &nbsp;|&nbsp; Estudiantes y Jubilados <span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.discountPrice)}</span>`;
+                // Precio diferenciado activado (etiqueta dinámica)
+                const discountLabel = typeof movie.hasDiscount === 'string' ? movie.hasDiscount : 'Estudiantes y Jubilados';
+                priceDisplay = `General <span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.price)}</span> &nbsp;|&nbsp; ${discountLabel} <span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.discountPrice)}</span>`;
             } else {
                 // Precio único
                 priceDisplay = `<span style="color: var(--accent-); font-weight: bold; letter-spacing: 0.5px;">${formatPrice(movie.price)}</span>`;
