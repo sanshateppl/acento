@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="show-time ${movie.time.includes(';') || movie.time.includes('\n') || movie.time.length > 5 ? 'multiple' : ''}">${movie.time.replace(/\n/g, '<br>')}</div>
                     </div>
                     
-                    <h2 class="movie-title">${movie.title}</h2>
+                    <h2 class="movie-title${movie.title.length > 25 ? ' long-title' : ''}">${movie.title}</h2>
                     <div class="movie-details">
                         ${movie.originalTitle !== movie.title ? `<span class="original-title">«${movie.originalTitle}»</span>` : ''}
                         <span>${movie.director} · ${movie.year} · ${movie.country} · ${movie.duration}</span>
