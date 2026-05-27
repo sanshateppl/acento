@@ -170,7 +170,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const tagsArray = movie.tags.split(',').map(t => t.trim()).filter(t => t);
                 if (tagsArray.length > 0) {
                     tagsHtml = `<div class="movie-badges-container">
-                        ${tagsArray.map(t => `<span class="movie-badge">${t}</span>`).join('')}
+                        ${tagsArray.map(t => {
+                            const isCba = t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes('cordob');
+                            return `<span class="movie-badge${isCba ? ' badge-cordobes' : ''}">${t}</span>`;
+                        }).join('')}
                     </div>`;
                 }
             }

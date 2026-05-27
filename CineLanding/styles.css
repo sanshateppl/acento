@@ -1,6 +1,6 @@
 :root {
-    --bg-color: #141c2b;
-    /* Fondo azul oscuro apagado */
+    --bg-color: #1a1816;
+    /* Fondo oscuro cálido vintage */
     --text-primary: #F6B81C;
     /* Texto principal (Amarillo retro) */
     --text-secondary: #feffdd;
@@ -665,7 +665,7 @@ a.cinema-location.maps-link:hover .loc-hover {
 }
 
 .main-footer strong {
-    color: var(--text-primary);
+    color: var(--text-secondary);
     font-weight: 600;
 }
 
@@ -688,7 +688,8 @@ a.cinema-location.maps-link:hover .loc-hover {
 
 /* SIDEBAR DE PRECIOS */
 .prices-sidebar {
-    display: none !important; /* Oculto temporalmente por pedido del usuario */
+    display: none !important;
+    /* Oculto temporalmente por pedido del usuario */
     width: 250px;
     position: absolute;
     left: 20px;
@@ -750,6 +751,7 @@ a.cinema-location.maps-link:hover .loc-hover {
 }
 
 @media (max-width: 1300px) {
+
     /* Si la pantalla no es lo suficientemente ancha, ocultamos el sidebar lateral y lo mostramos abajo de todo */
     .prices-sidebar {
         position: relative;
@@ -759,18 +761,18 @@ a.cinema-location.maps-link:hover .loc-hover {
         width: 100%;
         max-width: 800px;
     }
-    
+
     .main-layout {
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 0 10px;
     }
-    
+
     .container {
         order: 1;
     }
-    
+
     .prices-sidebar {
         order: 2;
     }
