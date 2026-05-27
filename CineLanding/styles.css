@@ -428,12 +428,6 @@ a.cinema-location.maps-link:hover .loc-hover {
     margin-bottom: 5px;
     padding-right: 150px;
     /* Espacio para la meta a la derecha */
-    overflow-wrap: break-word;
-    word-break: break-word;
-}
-
-.movie-title.long-title {
-    font-size: 1.4rem;
 }
 
 .movie-details {
@@ -570,7 +564,8 @@ a.cinema-location.maps-link:hover .loc-hover {
 }
 
 .movie-badge.badge-cordobes {
-    color: var(--text-primary);
+    background-color: var(--text-primary);
+    color: var(--accent-);
     font-weight: bold;
 }
 
