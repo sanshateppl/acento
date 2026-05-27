@@ -423,11 +423,13 @@ a.cinema-location.maps-link:hover .loc-hover {
 
 .movie-title {
     font-family: var(--font-serif);
-    font-size: 2rem;
+    font-size: clamp(1.1rem, 4vw, 2rem);
     font-weight: 400;
     margin-bottom: 5px;
     padding-right: 150px;
     /* Espacio para la meta a la derecha */
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .movie-details {
