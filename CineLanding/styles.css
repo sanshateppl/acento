@@ -163,8 +163,8 @@ body::after {
 }
 
 .main-logo {
-    height: 100px;
-    width: auto;
+    width: 95%;
+    height: auto;
     object-fit: contain;
 }
 
@@ -618,7 +618,7 @@ a.cinema-location.maps-link:hover .loc-hover {
 /* Responsivo */
 @media (max-width: 650px) {
     .main-logo {
-        height: 70px;
+        width: 100%;
     }
 
     .movie-card {
