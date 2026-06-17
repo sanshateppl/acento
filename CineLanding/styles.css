@@ -157,15 +157,17 @@ body::after {
 }
 
 .main-title {
-    color: var(--accent-);
-    font-family: var(--font-serif);
-    font-size: 6rem;
-    font-weight: 400;
-    line-height: 1.12;
     margin-bottom: 0;
-    letter-spacing: -2px;
-    font-style: italic;
     text-align: left;
+    line-height: 0;
+}
+
+.main-logo {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    filter: brightness(1.2);
 }
 
 .edition-bar {
@@ -617,8 +619,8 @@ a.cinema-location.maps-link:hover .loc-hover {
 
 /* Responsivo */
 @media (max-width: 650px) {
-    .main-title {
-        font-size: 4rem;
+    .main-logo {
+        height: 70px;
     }
 
     .movie-card {
